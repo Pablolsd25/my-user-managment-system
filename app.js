@@ -1,15 +1,18 @@
-// app.js
 const express = require("express");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
-require("dotenv").config();
 
+// Middleware
 app.use(express.json());
-app.use("/users", userRoutes);
-app.use("/auth", authRoutes);
+app.use(express.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// Rutas
+app.use("/users", userRoutes); // Monta las rutas de usuarios bajo el prefijo '/users'
+app.use("/auth", authRoutes); // Monta las rutas de autenticación bajo el prefijo '/auth'
+
+// Configuración del puerto
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
